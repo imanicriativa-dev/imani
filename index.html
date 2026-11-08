@@ -1,0 +1,2252 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#020408">
+    <meta name="description" content="IMANI STUDIO - Marketing Digital, Design, Audiovisual e Academia de Formação Profissional em Angola.">
+    <title>IMANI STUDIO | Marketing, Design, Audiovisual & Academia</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js para Gráficos Avançados -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-main: #020408;
+            --bg-card: #080e1d;
+            --bg-header: rgba(2, 4, 8, 0.85);
+            --accent-blue: #2563eb;
+            --accent-cyan: #00f0ff;
+            --accent-glow: rgba(0, 240, 255, 0.4);
+            --accent-hover: #3b82f6;
+            --text-white: #ffffff;
+            --text-gray: #94a3b8;
+            --border-color: #1e3a8a;
+            --success-green: #10b981;
+            --warning-yellow: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.97) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(0, 240, 255, 0.6); }
+        }
+
+        .page-content.active {
+            animation: fadeInScale 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--bg-header);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.15);
+            z-index: 1000;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover { transform: scale(1.03); }
+
+        .logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-cyan);
+            animation: pulseGlow 3s infinite;
+        }
+
+        .logo span {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.92rem;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--accent-cyan);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+        .btn-blue {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: #020408;
+            padding: 10px 22px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            font-size: 0.95rem;
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.35);
+        }
+
+        .btn-blue:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 240, 255, 0.6);
+            filter: brightness(1.1);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--accent-cyan);
+            background: rgba(0, 240, 255, 0.04);
+            color: var(--text-white);
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            font-size: 0.95rem;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 240, 255, 0.15);
+            color: var(--accent-cyan);
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: translateY(-3px);
+        }
+
+        .page-content { display: none; }
+        .page-content.active { display: block; }
+
+        .hero {
+            padding: 220px 24px 160px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(180deg, rgba(2, 4, 8, 0.5) 0%, rgba(2, 4, 8, 0.96) 100%), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1920') no-repeat center center/cover;
+            border-radius: 0 0 40px 40px;
+            border-bottom: 2px solid var(--accent-cyan);
+            margin-bottom: 60px;
+            box-shadow: inset 0 -40px 60px rgba(2, 4, 8, 0.95);
+            animation: floatSlow 6s ease-in-out infinite;
+        }
+
+        .hero h1 { font-size: 3.8rem; font-weight: 800; margin-bottom: 20px; line-height: 1.15; }
+        .hero h1 span { color: var(--accent-cyan); text-shadow: 0 0 35px var(--accent-glow); }
+        .hero p { color: var(--text-gray); font-size: 1.25rem; max-width: 720px; margin: 0 auto 38px; }
+        .hero-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+        section { padding: 60px 24px; max-width: 1200px; margin: 0 auto; }
+
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header h2 {
+            font-size: 2.5rem; margin-bottom: 12px; font-weight: 700;
+            background: linear-gradient(90deg, #ffffff, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-header p { color: var(--text-gray); font-size: 1.1rem; }
+
+        .grid-cards {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
+        }
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 18px; overflow: hidden; transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+        .card:hover {
+            border-color: var(--accent-cyan); transform: translateY(-10px) scale(1.01);
+            box-shadow: 0 20px 45px rgba(0, 240, 255, 0.25);
+        }
+        .card-img-wrapper { width: 100%; height: 200px; overflow: hidden; border-bottom: 1px solid var(--border-color); }
+        .card-img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease; filter: brightness(0.9);
+        }
+        .card:hover .card-img { transform: scale(1.12); filter: brightness(1.08); }
+        .card-body { padding: 30px; flex: 1; display: flex; flex-direction: column; }
+        .card-body h3 {
+            font-size: 1.4rem; margin-bottom: 12px; font-weight: 600; color: #f8fafc;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .card-body h3 i { color: var(--accent-cyan); }
+        .card-body p { color: var(--text-gray); font-size: 0.96rem; flex: 1; }
+
+        .form-box {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            padding: 45px; border-radius: 20px; max-width: 650px; margin: 0 auto;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.5);
+        }
+        .form-group { margin-bottom: 22px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--text-gray); font-size: 0.95rem; font-weight: 500; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 14px 18px; background: var(--bg-main);
+            border: 1px solid var(--border-color); border-radius: 10px; color: white;
+            font-size: 1rem; outline: none; transition: all 0.3s ease;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--accent-cyan); box-shadow: 0 0 18px var(--accent-glow);
+        }
+
+        .login-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 4, 8, 0.88); backdrop-filter: blur(14px);
+            display: none; justify-content: center; align-items: center; z-index: 2000;
+        }
+        .login-box {
+            background: var(--bg-card); border: 1px solid var(--accent-cyan);
+            padding: 45px; border-radius: 20px; width: 100%; max-width: 420px;
+            text-align: center; box-shadow: 0 0 40px rgba(0, 240, 255, 0.35);
+        }
+        .login-box h3 { margin-bottom: 10px; font-size: 1.6rem; color: var(--accent-cyan); }
+        .login-box p { color: var(--text-gray); margin-bottom: 28px; font-size: 0.95rem; }
+        .login-box input {
+            width: 100%; padding: 14px 18px; background: var(--bg-main);
+            border: 1px solid var(--border-color); border-radius: 10px; color: white;
+            font-size: 1rem; margin-bottom: 20px; outline: none;
+        }
+        .login-actions { display: flex; gap: 12px; }
+        .login-actions button { flex: 1; }
+
+        .student-portal-container { max-width: 1200px; margin: 140px auto 60px; padding: 0 24px; }
+        .progress-bar-container {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 14px; padding: 26px; margin-bottom: 30px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
+        }
+        .progress-bar {
+            flex: 1; min-width: 200px; height: 14px; background: var(--bg-main);
+            border-radius: 7px; margin: 0 20px; overflow: hidden; border: 1px solid var(--border-color);
+        }
+        .progress-fill {
+            height: 100%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            width: 0%; transition: width 0.6s ease; box-shadow: 0 0 15px var(--accent-cyan);
+        }
+
+        .portal-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+            align-items: start;
+        }
+        @media(max-width: 1024px) {
+            .portal-grid { grid-template-columns: 1fr; }
+        }
+
+        .portal-left-column, .portal-right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            min-width: 0;
+        }
+
+        .info-card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 28px; width: 100%;
+        }
+        .info-card h4 {
+            color: var(--accent-cyan); margin-bottom: 14px;
+            display: flex; align-items: center; gap: 10px; font-size: 1.25rem;
+        }
+
+        .notification-banner {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(37, 99, 235, 0.25));
+            border: 1px solid var(--accent-cyan);
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+            animation: fadeInScale 0.4s ease;
+        }
+
+        .admin-container { max-width: 1200px; margin: 140px auto 60px; padding: 0 24px; }
+        .admin-stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px; margin-bottom: 30px;
+        }
+        .stat-card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            padding: 25px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        .stat-card h4 { color: var(--text-gray); font-size: 0.85rem; margin-bottom: 8px; }
+        .stat-card p { font-size: 2rem; font-weight: 700; color: var(--accent-cyan); text-shadow: 0 0 20px var(--accent-glow); }
+
+        .admin-charts-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 30px; margin-bottom: 40px;
+        }
+        @media(max-width: 768px) {
+            .admin-charts-grid { grid-template-columns: 1fr; }
+        }
+
+        .chart-box {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        .chart-box h3 {
+            font-size: 1.1rem; color: var(--accent-cyan); margin-bottom: 20px;
+            display: flex; align-items: center; gap: 10px;
+        }
+
+        .admin-table-box {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 32px; overflow-x: auto;
+            margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        th, td { padding: 16px; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; }
+        th { color: var(--accent-cyan); font-weight: 600; }
+        td { color: var(--text-white); }
+
+        footer {
+            border-top: 1px solid var(--border-color); padding: 50px 24px;
+            text-align: center; color: var(--text-gray); font-size: 0.9rem; background: rgba(2, 4, 8, 0.9);
+        }
+
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px;
+            background: linear-gradient(135deg, #25d366, #10b981); color: white;
+            width: 62px; height: 62px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center;
+            box-shadow: 0 6px 25px rgba(16, 185, 129, 0.5); z-index: 1000;
+            text-decoration: none; animation: pulseGlow 2.5s infinite;
+        }
+        .whatsapp-float:hover { transform: scale(1.15) rotate(10deg); filter: brightness(1.15); }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo" onclick="switchPage('site')">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=100" alt="Logo">
+                IMANI <span>STUDIO</span>
+            </div>
+            <ul class="nav-links">
+                <li><a onclick="switchPage('site')" id="link-site" class="active">Início</a></li>
+                <li><a onclick="switchPage('servicos-page')">Serviços</a></li>
+                <li><a onclick="switchPage('portfolio-page')">Portefólio</a></li>
+                <li><a onclick="switchPage('formacoes-page')">Formações</a></li>
+                <li><a onclick="switchPage('portal-formando-page')" style="color: var(--accent-cyan); font-weight: 600;"><i data-lucide="book-open" size="16"></i> Portal do Formando</a></li>
+                <li><a onclick="requestAdminAccess()"><i data-lucide="shield" size="16"></i> Admin</a></li>
+            </ul>
+            <a onclick="switchPage('formacoes-page')" class="btn-blue"><i data-lucide="graduation-cap"></i> Inscrever-se</a>
+        </nav>
+    </header>
+
+    <!-- MODAL ADMIN -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-box">
+            <h3>Área Restrita (Admin)</h3>
+            <p>Introduza a senha de administrador (Padrão: imani2026)</p>
+            <input type="password" id="adminPasswordInput" placeholder="Palavra-passe" onkeypress="handlePasswordKey(event)">
+            <div class="login-actions">
+                <button class="btn-outline" onclick="closeLoginModal()">Cancelar</button>
+                <button class="btn-blue" onclick="verifyAdminPassword()">Entrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. INÍCIO -->
+    <div id="page-site" class="page-content active">
+        <section class="hero">
+            <h1>Soluções Criativas & <span>Digitais de Alto Impacto</span></h1>
+            <p>Impulsionamos a sua marca através de Marketing Digital, Design Gráfico, Produção Audiovisual e Formações de Excelência em Angola.</p>
+            <div class="hero-btns">
+                <a onclick="switchPage('servicos-page')" class="btn-blue"><i data-lucide="arrow-right"></i> Ver Serviços</a>
+                <a onclick="switchPage('formacoes-page')" class="btn-outline"><i data-lucide="graduation-cap"></i> Conhecer Cursos</a>
+                <button id="pwaInstallBtn" class="btn-outline" style="display: none; border-color: var(--success-green); color: var(--success-green);" onclick="instalarPWA()"><i data-lucide="smartphone"></i> Instalar App no Telemóvel</button>
+            </div>
+        </section>
+        <section>
+            <div class="section-header">
+                <h2>Pilares da IMANI STUDIO</h2>
+                <p>Excelência criativa e técnica em cada projeto desenvolvido.</p>
+            </div>
+            <div class="grid-cards">
+                <div class="card" onclick="switchPage('servicos-page')" style="cursor: pointer;">
+                    <div class="card-img-wrapper"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600" class="card-img" alt="Marketing"></div>
+                    <div class="card-body">
+                        <h3><i data-lucide="trending-up" size="22"></i> Marketing & Redes</h3>
+                        <p>Estratégias de posicionamento digital e gestão profissional de redes sociais.</p>
+                    </div>
+                </div>
+                <div class="card" onclick="switchPage('servicos-page')" style="cursor: pointer;">
+                    <div class="card-img-wrapper"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600" class="card-img" alt="Design"></div>
+                    <div class="card-body">
+                        <h3><i data-lucide="palette" size="22"></i> Design & Impressão</h3>
+                        <p>Identidade visual corporativa, branding imersivo e materiais gráficos.</p>
+                    </div>
+                </div>
+                <div class="card" onclick="switchPage('servicos-page')" style="cursor: pointer;">
+                    <div class="card-img-wrapper"><img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=600" class="card-img" alt="Audiovisual"></div>
+                    <div class="card-body">
+                        <h3><i data-lucide="video" size="22"></i> Audiovisual & Música</h3>
+                        <p>Gravação de músicas, captação profissional, vídeo e fotografia corporativa.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 2. SERVIÇOS -->
+    <div id="page-servicos-page" class="page-content">
+        <section>
+            <div class="section-header" style="margin-top: 40px;">
+                <h2>Lista Detalhada de Serviços</h2>
+                <p>Tudo o que a IMANI STUDIO faz para elevar o seu negócio.</p>
+            </div>
+            <div class="grid-cards">
+                <div class="card">
+                    <div class="card-img-wrapper"><img src="https://images.unsplash.com/photo-1432888622747-4eb9a1efeb05?auto=format&fit=crop&q=80&w=600" class="card-img" alt="Marketing Digital"></div>
+                    <div class="card-body">
+                        <h3><i data-lucide="bar-chart-3" size="22"></i> 1. Marketing Digital</h3>
+                        <p>Gestão completa de Redes Sociais, campanhas de Tráfego Pago e estratégias de conversão avançada.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img-wrapper"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=600" class="card-img" alt="Design Gráfico"></div>
+                    <div class="card-body">
+                        <h3><i data-lucide="layout" size="22"></i> 2. Design Gráfico</h3>
+                        <p>Identidade Visual, logótipos, design publicitário de alto impacto e serviços de Impressão.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img-wrapper"><img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600" class="card-img" alt="Produção Audiovisual"></div>
+                    <div class="card-body">
+                        <h3><i data-lucide="headphones" size="22"></i> 3. Produção Audiovisual</h3>
+                        <p>Gravação, mistura e masterização de áudio, produção de vídeos e fotografia comercial.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img-wrapper"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600" class="card-img" alt="Websites"></div>
+                    <div class="card-body">
+                        <h3><i data-lucide="globe" size="22"></i> 4. Criação de Websites</h3>
+                        <p>Websites institucionais responsivos, lojas online e otimização SEO profissional.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 3. PORTEFÓLIO -->
+    <div id="page-portfolio-page" class="page-content">
+        <section>
+            <div class="section-header" style="margin-top: 40px;">
+                <h2>Portefólio de Trabalhos</h2>
+                <p>Conheça alguns dos projetos realizados pela nossa equipa.</p>
+            </div>
+            <div class="grid-cards" id="portfolioContainer"></div>
+        </section>
+    </div>
+
+    <!-- 4. FORMAÇÕES -->
+    <div id="page-formacoes-page" class="page-content">
+        <section>
+            <div class="section-header" style="margin-top: 40px;">
+                <h2>Academia IMANI - Formações</h2>
+                <p>Capacite-se com profissionais experientes nas áreas com maior procura.</p>
+            </div>
+            
+            <div class="grid-cards" id="cursosPublicosContainer" style="margin-bottom: 60px;"></div>
+
+            <div class="form-box">
+                <h3 style="margin-bottom: 20px; text-align: center; color: var(--accent-cyan);"><i data-lucide="user-plus" size="20" style="vertical-align: middle;"></i> Inscrição Online</h3>
+                <form id="inscricaoForm" onsubmit="enviarInscricao(event)">
+                    <div class="form-group">
+                        <label>Nome Completo:</label>
+                        <input type="text" id="nomeAluno" required placeholder="Insira o seu nome completo">
+                    </div>
+                    <div class="form-group">
+                        <label>Contacto Telefónico / WhatsApp:</label>
+                        <input type="text" id="telAluno" required placeholder="+244 900 000 000">
+                    </div>
+                    <div class="form-group">
+                        <label>Email de Contacto:</label>
+                        <input type="email" id="emailAluno" required placeholder="exemplo@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Curso & Turma Desejada:</label>
+                        <select id="cursoAluno" required>
+                            <option value="">-- Escolha um Curso/Turma --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Plano de Faturação:</label>
+                        <select id="planoAluno" required>
+                            <option value="Mensal">Mensalidade Recorrente (Renovação Mensal)</option>
+                            <option value="Integral">Pagamento Único Integral (Acesso Total)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-blue" style="width: 100%; justify-content: center;"><i data-lucide="send"></i> Submeter Inscrição</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- 5. PORTAL DO FORMANDO -->
+    <div id="page-portal-formando-page" class="page-content">
+        <div id="alunoLoginBoxArea" style="max-width: 500px; margin: 160px auto 80px; padding: 0 24px;">
+            <div class="form-box" style="text-align: center;">
+                <div style="margin-bottom: 15px;"><i data-lucide="lock" size="48" style="color: var(--accent-cyan);"></i></div>
+                <h3 style="margin-bottom: 10px;">Portal do Formando</h3>
+                <p style="color: var(--text-gray); margin-bottom: 24px;">Insira as credenciais fornecidas após a confirmação da sua inscrição.</p>
+                <div class="form-group" style="text-align: left;">
+                    <label>Utilizador (Email):</label>
+                    <input type="text" id="alunoUser" placeholder="exemplo@email.com">
+                </div>
+                <div class="form-group" style="text-align: left;">
+                    <label>Palavra-passe:</label>
+                    <input type="password" id="alunoPass" placeholder="Palavra-passe temporária">
+                </div>
+                <button class="btn-blue" style="width: 100%; justify-content: center;" onclick="verifyAlunoLogin()"><i data-lucide="log-in"></i> Entrar na Plataforma</button>
+            </div>
+        </div>
+
+        <div id="alunoDashboardArea" class="student-portal-container" style="display: none;">
+            <div id="alunoNotificacaoBanner"></div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <img id="alunoAvatarDisplay" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150" alt="Avatar" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-cyan);">
+                    <div>
+                        <h2>Olá, <span id="alunoNomeDisplay" style="color: var(--accent-cyan);">Aluno</span></h2>
+                        <p style="color: var(--text-gray); font-size: 0.95rem;" id="alunoCursoNome">Curso</p>
+                    </div>
+                </div>
+                <button class="btn-outline" onclick="logoutAluno()"><i data-lucide="log-out" size="16"></i> Terminar Sessão</button>
+            </div>
+
+            <!-- SUBTRIÇÃO / MENSALIDADE RECORRENTE STATUS CARD -->
+            <div id="subscricaoStatusCard" class="info-card" style="border-color: var(--success-green); background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(37,99,235,0.1)); margin-bottom: 30px;">
+                <h4><i data-lucide="refresh-cw" style="color: var(--success-green);"></i> Estado da Subscrição & Mensalidade</h4>
+                <div id="subscricaoInfoContent"><p style="color: var(--text-gray); font-size: 0.95rem;">A carregar dados da subscrição...</p></div>
+            </div>
+
+            <!-- SALA DE AULA AO VIVO INTEGRADA (WEBNAR / JITSI) -->
+            <div class="info-card" style="border-color: var(--accent-cyan); background: linear-gradient(135deg, rgba(0,240,255,0.05), rgba(37,99,235,0.1)); margin-bottom: 30px;">
+                <h4><i data-lucide="video" style="color: var(--accent-cyan);"></i> Sala de Aula ao Vivo (Webinar / Videoconferência)</h4>
+                <p style="color: var(--text-gray); font-size: 0.95rem; margin-bottom: 15px;">Aceda à sala virtual interativa para as aulas síncronas e esclarecimento de dúvidas em direto com o formador.</p>
+                <div id="liveClassArea">
+                    <p style="color: var(--warning-yellow); font-size: 0.9rem; margin-bottom: 15px;"><b>Estado:</b> Nenhuma sala ao vivo ativa neste momento. Consulte o calendário académico.</p>
+                    <button class="btn-blue" onclick="entrarSalaAoVivo()"><i data-lucide="tv"></i> Entrar na Sala Virtual (Jitsi Meet)</button>
+                </div>
+            </div>
+
+            <div class="progress-bar-container">
+                <span>Progresso do Curso:</span>
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <span id="progressText">0%</span>
+            </div>
+
+            <div class="portal-grid">
+                <div class="portal-left-column">
+                    <div class="info-card">
+                        <h4><i data-lucide="video"></i> Módulos e Aulas Publicadas</h4>
+                        <div id="listaAulasAluno"></div>
+                    </div>
+
+                    <div class="info-card">
+                        <h4><i data-lucide="check-square"></i> Testes de Avaliação Dinâmicos por Módulo</h4>
+                        <div id="quizContainer">
+                            <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 15px;">Responda aos testes de avaliação associados aos módulos publicados para validar os seus conhecimentos.</p>
+                            <div id="quizFormArea"></div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h4><i data-lucide="credit-card"></i> Pagamento Instantâneo (Multicaixa Express / Kwanza Online)</h4>
+                        <div style="background: var(--bg-main); padding: 20px; border-radius: 12px; border: 1px solid var(--accent-cyan); margin-bottom: 20px;">
+                            <p style="color: var(--accent-cyan); font-weight: 600; margin-bottom: 8px;"><i data-lucide="zap" size="18" style="vertical-align: middle;"></i> Gateway de Pagamento Automático</p>
+                            <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 15px;">Efetue o pagamento da mensalidade instantaneamente através de Multicaixa Express (Número de Telemóvel) ou Referência Kwanza Online. A ativação do acesso e fatura AGT são imediatas!</p>
+                            
+                            <form onsubmit="pagarComMulticaixaExpress(event)">
+                                <div class="form-group" style="margin-bottom: 12px;">
+                                    <label>Nº Telemóvel Multicaixa Express / Referência:</label>
+                                    <input type="text" id="multicaixaTelemovel" required placeholder="+244 920 000 000" style="background: var(--bg-card);">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 14px;">
+                                    <label>Valor a Pagar (Kz):</label>
+                                    <input type="text" id="valorPagamentoGateway" value="25.000 Kz" readonly style="background: var(--bg-card); color: var(--success-green); font-weight: bold;">
+                                </div>
+                                <button type="submit" class="btn-blue" style="width: 100%; justify-content: center;"><i data-lucide="shield-check"></i> Pagar Instantaneamente (Simulador API)</button>
+                            </form>
+                        </div>
+
+                        <h5 style="margin-bottom: 12px; color: var(--text-white); font-size: 1rem;">O Meu Histórico de Faturas & Recibos Fiscais</h5>
+                        <div id="listaRecibosAluno">
+                            <p style="color: var(--text-gray); font-size: 0.9rem;">A carregar faturas e recibos...</p>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h4><i data-lucide="message-square"></i> Fórum de Discussão Comunitário (Comentários Aninhados)</h4>
+                        <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 15px;">Partilhe ideias, projetos e responda diretamente às publicações dos seus colegas.</p>
+                        <form onsubmit="enviarMensagemForum(event)">
+                            <div class="form-group" style="margin-bottom: 12px;">
+                                <textarea id="forumTexto" rows="3" required placeholder="Escreva um novo tópico ou mensagem para a turma..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-blue" style="padding: 8px 16px; font-size: 0.9rem;"><i data-lucide="send" size="14"></i> Publicar Tópico</button>
+                        </form>
+                        <h5 style="margin-top: 25px; margin-bottom: 15px; color: var(--text-white); font-size: 1rem;">Discussões & Respostas</h5>
+                        <div id="listaMensagensForum"><p style="color: var(--text-gray); font-size: 0.9rem;">Ainda não existem publicações no fórum.</p></div>
+                    </div>
+
+                    <div class="info-card">
+                        <h4><i data-lucide="help-circle"></i> Tire as suas Dúvidas com o Formador</h4>
+                        <form onsubmit="enviarDuvidaAluno(event)">
+                            <div class="form-group" style="margin-bottom: 12px;">
+                                <textarea id="duvidaTexto" rows="3" required placeholder="Escreva a sua dúvida detalhadamente..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-blue" style="padding: 8px 16px; font-size: 0.9rem;"><i data-lucide="send" size="14"></i> Enviar Dúvida</button>
+                        </form>
+                        <h5 style="margin-top: 20px; margin-bottom: 10px; color: var(--text-white); font-size: 0.95rem;">As minhas Dúvidas & Respostas</h5>
+                        <div id="listaDuvidasAluno"><p style="color: var(--text-gray); font-size: 0.9rem;">Nenhuma dúvida colocada.</p></div>
+                    </div>
+                </div>
+
+                <div class="portal-right-column">
+                    <div class="info-card">
+                        <h4><i data-lucide="user"></i> Editar o Meu Perfil</h4>
+                        <form onsubmit="salvarPerfilAluno(event)">
+                            <div class="form-group" style="margin-bottom: 14px;">
+                                <label>Nome:</label>
+                                <input type="text" id="editNome" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 14px;">
+                                <label>Link da Foto de Perfil (URL):</label>
+                                <input type="url" id="editAvatar" placeholder="https://images.unsplash.com/...">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 14px;">
+                                <label>Nova Palavra-passe:</label>
+                                <input type="password" id="editPass" placeholder="Deixe em branco para manter">
+                            </div>
+                            <button type="submit" class="btn-blue" style="width: 100%; justify-content: center; padding: 10px; font-size: 0.9rem;"><i data-lucide="save"></i> Guardar Alterações</button>
+                        </form>
+                    </div>
+
+                    <div class="info-card">
+                        <h4><i data-lucide="calendar"></i> Horários & Calendário</h4>
+                        <p style="color: var(--text-gray); font-size: 0.95rem; margin-bottom: 10px;"><b>Aulas ao Vivo / Dúvidas:</b> Terças e Quintas (18h00 - 20h00)</p>
+                        <p style="color: var(--text-gray); font-size: 0.95rem;"><b>Renovação de Mensalidade:</b> A cada 30 dias</p>
+                    </div>
+
+                    <div class="info-card" style="text-align: center;">
+                        <h4><i data-lucide="award"></i> Certificação Oficial com Assinatura Digital</h4>
+                        <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 15px;">Conclua 100% das aulas e aprove os testes online para emitir o seu certificado oficial com selo e assinatura digital.</p>
+                        <div id="certificadoBox">
+                            <span style="color: var(--text-gray); font-style: italic;">Disponível após aprovação total.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. PAINEL ADMIN -->
+    <div id="page-admin" class="page-content">
+        <div class="admin-container">
+            <div class="section-header" style="text-align: left; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                <div>
+                    <h2>Painel de Gestão & Faturação Certificada AGT</h2>
+                    <p>Controlo de faturas automáticas via Gateway, subscrições mensais e relatórios fiscais.</p>
+                </div>
+                <div>
+                    <button class="btn-blue" onclick="exportarDadosCSV()"><i data-lucide="download"></i> Descarregar Relatório (CSV/Excel)</button>
+                </div>
+            </div>
+
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <h4>Subscrições Vencidas/Pendentes</h4>
+                    <p id="statSubscricoesVencidas" style="color: var(--warning-yellow);">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Total de Inscrições</h4>
+                    <p id="statInscricoes">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Receita Confirmada</h4>
+                    <p id="statReceita" style="color: var(--success-green);">0 Kz</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Cursos & Turmas</h4>
+                    <p id="statCursos">0</p>
+                </div>
+            </div>
+
+            <!-- GESTÃO DE SALAS DE AULA AO VIVO (ADMIN) -->
+            <div class="admin-table-box" style="margin-bottom: 40px;">
+                <h3 style="margin-bottom: 15px; color: var(--accent-cyan);"><i data-lucide="tv" size="20" style="vertical-align: middle;"></i> Gerir Sessão de Aula ao Vivo (Webinar)</h3>
+                <form onsubmit="publicarSalaAoVivo(event)">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Curso / Turma:</label>
+                            <select id="liveCurso" required>
+                                <option value="">-- Selecione o Curso --</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Link da Videoconferência (Jitsi / Zoom / Meet):</label>
+                            <input type="url" id="liveUrl" required placeholder="https://meet.jit.si/ImaniStudioAula">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-blue" style="margin-top: 16px;"><i data-lucide="radio"></i> Ativar Sala Ao Vivo para os Alunos</button>
+                </form>
+            </div>
+
+            <!-- GRÁFICOS VISUAIS AVANÇADOS (CHART.JS) -->
+            <div class="admin-charts-grid">
+                <div class="chart-box">
+                    <h3><i data-lucide="trending-up" size="18"></i> Crescimento Mensal de Receitas (Kz)</h3>
+                    <canvas id="receitaChart" height="140"></canvas>
+                </div>
+                <div class="chart-box">
+                    <h3><i data-lucide="pie-chart" size="18"></i> Volume de Inscrições por Curso</h3>
+                    <canvas id="inscricoesChart" height="140"></canvas>
+                </div>
+            </div>
+
+            <div class="admin-table-box" style="margin-bottom: 40px;">
+                <h3 style="margin-bottom: 15px; color: var(--accent-cyan);"><i data-lucide="book-plus" size="20" style="vertical-align: middle;"></i> Criar Novo Curso & Turma</h3>
+                <form onsubmit="adicionarCursoTurma(event)">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Nome do Curso:</label>
+                            <input type="text" id="novoCursoNome" required placeholder="Ex: Edição de Vídeo Profissional">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Identificação da Turma:</label>
+                            <input type="text" id="novoTurmaNome" required placeholder="Ex: Turma A - Março 2026">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Carga Horária / Detalhes:</label>
+                            <input type="text" id="novoCursoCarga" required placeholder="Ex: 40 Horas / Prático">
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 16px;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Data de Início:</label>
+                            <input type="date" id="novoDataInicio" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Data de Fim:</label>
+                            <input type="date" id="novoDataFim" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Imagem Ilustrativa (URL):</label>
+                            <input type="url" id="novoCursoImg" required placeholder="https://images.unsplash.com/...">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 16px; margin-bottom: 0;">
+                        <label>Descrição do Curso:</label>
+                        <textarea id="novoCursoDesc" rows="2" required placeholder="Breve resumo do que será abordado na formação..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-blue" style="margin-top: 16px;"><i data-lucide="plus-circle"></i> Registar Curso & Turma</button>
+                </form>
+            </div>
+
+            <div class="admin-table-box" style="margin-bottom: 40px;">
+                <h3>Cursos & Turmas Ativas</h3>
+                <table>
+                    <thead><tr><th>Curso & Turma</th><th>Carga Horária</th><th>Datas (Início / Fim)</th><th>Ação</th></tr></thead>
+                    <tbody id="adminCursosBody"><tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Nenhum curso registado.</td></tr></tbody>
+                </table>
+            </div>
+
+            <div class="admin-table-box" style="margin-bottom: 40px;">
+                <h3><i data-lucide="file-text" size="18" style="vertical-align: middle;"></i> Gestão Financeira & Transações (Gateway Automático)</h3>
+                <table>
+                    <thead><tr><th>Data</th><th>Nº Documento / Descrição</th><th>Valor</th><th>Método / Ref</th><th>Estado</th><th>Ação Fiscal / Fatura</th></tr></thead>
+                    <tbody id="adminFinancasBody"><tr><td colspan="6" style="text-align: center; color: var(--text-gray);">Nenhuma transação registada.</td></tr></tbody>
+                </table>
+            </div>
+
+            <div class="admin-table-box" style="margin-bottom: 40px;">
+                <h3><i data-lucide="users" size="18" style="vertical-align: middle;"></i> Controlo de Contas, Subscrições Mensais & Acessos de Alunos</h3>
+                <table>
+                    <thead><tr><th>Data</th><th>Formando & Contacto</th><th>Curso / Plano</th><th>Estado da Subscrição</th><th>Ações de Controlo</th></tr></thead>
+                    <tbody id="adminTableBody"><tr><td colspan="5" style="text-align: center; color: var(--text-gray);">Nenhuma inscrição registada.</td></tr></tbody>
+                </table>
+            </div>
+
+            <div class="admin-table-box" style="margin-bottom: 40px;">
+                <h3><i data-lucide="message-square" size="18" style="vertical-align: middle;"></i> Moderação do Fórum de Discussão</h3>
+                <table>
+                    <thead><tr><th>Data & Aluno</th><th>Curso</th><th>Mensagem</th><th>Ação</th></tr></thead>
+                    <tbody id="adminForumBody"><tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Nenhuma mensagem no fórum.</td></tr></tbody>
+                </table>
+            </div>
+
+            <div class="admin-table-box" style="margin-bottom: 40px;">
+                <h3><i data-lucide="help-circle" size="18" style="vertical-align: middle;"></i> Caixa de Dúvidas com o Formador</h3>
+                <table>
+                    <thead><tr><th>Data & Aluno</th><th>Curso</th><th>Questão</th><th>Resposta / Ação</th></tr></thead>
+                    <tbody id="adminDuvidasBody"><tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Nenhuma dúvida registada.</td></tr></tbody>
+                </table>
+            </div>
+
+            <div class="admin-table-box" style="margin-bottom: 40px;">
+                <h3 style="margin-bottom: 15px; color: var(--accent-cyan);"><i data-lucide="check-square" size="20" style="vertical-align: middle;"></i> Adicionar Aula, Manual PDF & Teste de Avaliação (Quiz)</h3>
+                <form onsubmit="adicionarConteudoComQuiz(event)">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Curso / Turma:</label>
+                            <select id="aulaCurso" required>
+                                <option value="">-- Selecione o Curso --</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Título da Aula / Módulo:</label>
+                            <input type="text" id="aulaTitulo" required placeholder="Ex: Módulo 1: Fundamentos">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Link do Vídeo (YouTube/Drive):</label>
+                            <input type="url" id="aulaLink" required placeholder="https://...">
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 16px;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Link do Manual em PDF (Opcional):</label>
+                            <input type="url" id="aulaPdf" placeholder="https://... (Link Google Drive / PDF)">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Descrição e Material de Apoio:</label>
+                            <input type="text" id="aulaDesc" placeholder="Resumo breve da aula...">
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; color: var(--accent-cyan); font-size: 1rem;">Configurar Pergunta de Avaliação do Módulo</h4>
+                    <div class="form-group">
+                        <label>Enunciado da Questão:</label>
+                        <input type="text" id="quizPergunta" required placeholder="Ex: Qual é o principal objetivo de...?">
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Opção A:</label>
+                            <input type="text" id="quizOpA" required placeholder="Primeira alternativa">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Opção B:</label>
+                            <input type="text" id="quizOpB" required placeholder="Segunda alternativa (Correta)">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Opção C:</label>
+                            <input type="text" id="quizOpC" required placeholder="Terceira alternativa">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 16px; margin-bottom: 0;">
+                        <label>Resposta Correta:</label>
+                        <select id="quizCorreta" required>
+                            <option value="A">Opção A</option>
+                            <option value="B" selected>Opção B</option>
+                            <option value="C">Opção C</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-blue" style="margin-top: 20px;"><i data-lucide="plus-circle"></i> Publicar Aula & Teste Dinâmico</button>
+                </form>
+            </div>
+
+            <div class="admin-table-box" style="margin-bottom: 40px;">
+                <h3>Aulas & Testes Publicados</h3>
+                <table>
+                    <thead><tr><th>Curso</th><th>Título & Quiz</th><th>Manual PDF</th><th>Ação</th></tr></thead>
+                    <tbody id="adminAulasBody"><tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Nenhum conteúdo publicado.</td></tr></tbody>
+                </table>
+            </div>
+
+            <div class="admin-table-box" style="margin-bottom: 40px;">
+                <h3 style="margin-bottom: 15px; color: var(--accent-cyan);"><i data-lucide="image" size="20" style="vertical-align: middle;"></i> Adicionar Projeto ao Portefólio</h3>
+                <form onsubmit="adicionarProjeto(event)">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Título do Projeto:</label>
+                            <input type="text" id="projTitulo" required placeholder="Ex: Campanha Publicitária X">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Link da Imagem (URL):</label>
+                            <input type="url" id="projImg" required placeholder="https://images.unsplash.com/...">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 16px; margin-bottom: 0;">
+                        <label>Descrição Curta:</label>
+                        <textarea id="projDesc" rows="2" required placeholder="Breve resumo do projeto realizado..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-blue" style="margin-top: 16px;"><i data-lucide="plus-circle"></i> Publicar Projeto no Site</button>
+                </form>
+            </div>
+
+            <div class="admin-table-box">
+                <h3>Projetos no Portefólio</h3>
+                <table>
+                    <thead><tr><th>Imagem</th><th>Título</th><th>Descrição</th><th>Ação</th></tr></thead>
+                    <tbody id="adminProjetosBody"><tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Nenhum projeto registado.</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <p>&copy; 2026 IMANI STUDIO, Lda. Todos os direitos reservados.</p>
+        <p style="margin-top: 8px;">Luanda, Angola | Contacto: +244 900 000 000 | contacto@imanistudio.com</p>
+    </footer>
+
+    <a href="https://wa.me/244900000000" target="_blank" class="whatsapp-float">
+        <i data-lucide="message-circle" size="28"></i>
+    </a>
+
+    <script>
+        lucide.createIcons();
+        const ADMIN_PASSWORD = "imani2026";
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const btn = document.getElementById('pwaInstallBtn');
+            if (btn) btn.style.display = 'inline-flex';
+        });
+
+        function instalarPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('Utilizador aceitou instalar a PWA');
+                    }
+                    deferredPrompt = null;
+                    document.getElementById('pwaInstallBtn').style.display = 'none';
+                });
+            }
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker registado com sucesso:', reg.scope))
+                    .catch(err => console.log('Erro ao registar Service Worker:', err));
+            });
+        }
+
+        let cursosHistory = JSON.parse(localStorage.getItem('imani_cursos')) || [
+            { id: 1, nome: "Marketing Digital & Tráfego", turma: "Turma Geral 2026", carga: "40 Horas", inicio: "2026-03-01", fim: "2026-04-15", img: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=600", desc: "Estratégias avançadas de redes sociais e anúncios pagos." },
+            { id: 2, nome: "Design Gráfico Avançado", turma: "Turma Geral 2026", carga: "35 Horas", inicio: "2026-03-05", fim: "2026-04-20", img: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=600", desc: "Criação publicitária, logótipos e pré-impressão." },
+            { id: 3, nome: "Produção Musical & Áudio", turma: "Turma Geral 2026", carga: "45 Horas", inicio: "2026-03-10", fim: "2026-04-30", img: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=600", desc: "Captação, gravação de voz, mistura e masterização." }
+        ];
+
+        function publicarSalaAoVivo(event) {
+            event.preventDefault();
+            const curso = document.getElementById('liveCurso').value;
+            const url = document.getElementById('liveUrl').value.trim();
+            
+            let salasAoVivo = JSON.parse(localStorage.getItem('imani_lives')) || {};
+            salasAoVivo[curso] = url;
+            localStorage.setItem('imani_lives', JSON.stringify(salasAoVivo));
+            alert('Sala de aula ao vivo ativada com sucesso para o curso selecionado!');
+            event.target.reset();
+        }
+
+        function renderSubscricaoAluno() {
+            const alunoEmail = sessionStorage.getItem('aluno_email');
+            const cardContent = document.getElementById('subscricaoInfoContent');
+            if (!cardContent) return;
+
+            let inscricoesHistory = JSON.parse(localStorage.getItem('imani_inscricoes')) || [];
+            let alunoReg = inscricoesHistory.find(i => i.email === alunoEmail);
+
+            if (!alunoReg) return;
+
+            let plano = alunoReg.plano || 'Mensal';
+            let dataSub = new Date(alunoReg.dataSubscricao || alunoReg.id);
+            let hoje = new Date();
+            let diffDias = Math.floor((hoje - dataSub) / (1000 * 60 * 60 * 24));
+            let diasRestantes = plano === 'Mensal' ? Math.max(0, 30 - diffDias) : 999;
+            let subscricaoAtiva = plano === 'Integral' || diasRestantes > 0;
+
+            if (!subscricaoAtiva) {
+                cardContent.innerHTML = `
+                    <p style="color: var(--warning-yellow); font-size: 0.95rem; margin-bottom: 10px;"><b>⚠️ A sua subscrição mensal expirou!</b> Efetue o pagamento automático via Multicaixa Express para renovar o seu acesso de imediato.</p>
+                    <span style="font-size: 0.85rem; color: var(--text-gray);">Plano: ${plano} | Dias restantes: 0</span>
+                `;
+            } else {
+                cardContent.innerHTML = `
+                    <p style="color: var(--success-green); font-size: 0.95rem; margin-bottom: 6px;"><b>✔ Subscrição Ativa & Regularizada (${plano})</b></p>
+                    <p style="color: var(--text-gray); font-size: 0.9rem;">${plano === 'Mensal' ? `Faltam <b>${diasRestantes} dias</b> para a próxima renovação / pagamento da mensalidade.` : 'Acesso vitalício ou integral garantido.'}</p>
+                `;
+            }
+        }
+
+        function renderSalaAoVivoAluno() {
+            const cursoAluno = sessionStorage.getItem('aluno_curso');
+            const area = document.getElementById('liveClassArea');
+            if (!area) return;
+
+            let salasAoVivo = JSON.parse(localStorage.getItem('imani_lives')) || {};
+            let urlLive = salasAoVivo[cursoAluno];
+
+            if (urlLive) {
+                area.innerHTML = `
+                    <p style="color: var(--success-green); font-size: 0.95rem; margin-bottom: 15px;"><b>✔ Sessão Ao Vivo Acontecendo Agora!</b> Clique abaixo para entrar na sala virtual com o formador.</p>
+                    <a href="${urlLive}" target="_blank" class="btn-blue" style="padding: 10px 22px; font-size: 0.95rem;"><i data-lucide="video"></i> Entrar na Sala Virtual Agora</a>
+                `;
+            } else {
+                area.innerHTML = `
+                    <p style="color: var(--warning-yellow); font-size: 0.9rem; margin-bottom: 15px;"><b>Estado:</b> Nenhuma sala ao vivo ativa neste momento. Consulte o calendário académico.</p>
+                    <button class="btn-outline" onclick="window.open('https://meet.jit.si/ImaniStudioSalaVirtual', '_blank')"><i data-lucide="tv"></i> Sala Geral de Apoio (Jitsi)</button>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        function entrarSalaAoVivo() {
+            const cursoAluno = sessionStorage.getItem('aluno_curso');
+            let salasAoVivo = JSON.parse(localStorage.getItem('imani_lives')) || {};
+            let urlLive = salasAoVivo[cursoAluno] || 'https://meet.jit.si/ImaniStudioSalaVirtual';
+            window.open(urlLive, '_blank');
+        }
+
+        function adicionarCursoTurma(event) {
+            event.preventDefault();
+            const novoCurso = {
+                id: Date.now(),
+                nome: document.getElementById('novoCursoNome').value.trim(),
+                turma: document.getElementById('novoTurmaNome').value.trim(),
+                carga: document.getElementById('novoCursoCarga').value.trim(),
+                inicio: document.getElementById('novoDataInicio').value,
+                fim: document.getElementById('novoDataFim').value,
+                img: document.getElementById('novoCursoImg').value.trim(),
+                desc: document.getElementById('novoCursoDesc').value.trim()
+            };
+            cursosHistory.push(novoCurso);
+            localStorage.setItem('imani_cursos', JSON.stringify(cursosHistory));
+            alert('Curso e Turma criados com sucesso!');
+            event.target.reset();
+            renderCursosPublicos();
+            renderAdminData();
+            atualizarSelectsCursos();
+        }
+
+        function removerCursoTurma(index) {
+            cursosHistory.splice(index, 1);
+            localStorage.setItem('imani_cursos', JSON.stringify(cursosHistory));
+            renderCursosPublicos();
+            renderAdminData();
+            atualizarSelectsCursos();
+        }
+
+        function renderCursosPublicos() {
+            const container = document.getElementById('cursosPublicosContainer');
+            if (!container) return;
+            cursosHistory = JSON.parse(localStorage.getItem('imani_cursos')) || cursosHistory;
+
+            container.innerHTML = '';
+            cursosHistory.forEach(c => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `
+                    <div class="card-img-wrapper"><img src="${c.img}" class="card-img" alt="${c.nome}"></div>
+                    <div class="card-body">
+                        <h3><i data-lucide="graduation-cap" size="22"></i> ${c.nome}</h3>
+                        <p><b>Turma:</b> ${c.turma}</p>
+                        <p>${c.desc}</p>
+                        <ul style="margin-top: 10px; font-size: 0.9rem; color: var(--text-gray);">
+                            <li>Carga Horária: ${c.carga}</li>
+                            <li>Início: ${c.inicio} | Fim: ${c.fim}</li>
+                        </ul>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            lucide.createIcons();
+        }
+
+        function atualizarSelectsCursos() {
+            cursosHistory = JSON.parse(localStorage.getItem('imani_cursos')) || cursosHistory;
+            const selectInscricao = document.getElementById('cursoAluno');
+            const selectAula = document.getElementById('aulaCurso');
+            const selectLive = document.getElementById('liveCurso');
+            
+            if (selectInscricao) {
+                selectInscricao.innerHTML = '<option value="">-- Escolha um Curso/Turma --</option>';
+                cursosHistory.forEach(c => {
+                    let optVal = `${c.nome} (${c.turma})`;
+                    selectInscricao.innerHTML += `<option value="${optVal}">${optVal}</option>`;
+                });
+            }
+
+            if (selectAula) {
+                selectAula.innerHTML = '<option value="">-- Selecione o Curso --</option>';
+                cursosHistory.forEach(c => {
+                    let optVal = `${c.nome} (${c.turma})`;
+                    selectAula.innerHTML += `<option value="${optVal}">${optVal}</option>`;
+                });
+            }
+
+            if (selectLive) {
+                selectLive.innerHTML = '<option value="">-- Selecione o Curso --</option>';
+                cursosHistory.forEach(c => {
+                    let optVal = `${c.nome} (${c.turma})`;
+                    selectLive.innerHTML += `<option value="${optVal}">${optVal}</option>`;
+                });
+            }
+        }
+
+        function requestAdminAccess() {
+            if (sessionStorage.getItem('imani_auth') === 'true') {
+                switchPage('admin');
+                return;
+            }
+            document.getElementById('loginOverlay').style.display = 'flex';
+            document.getElementById('adminPasswordInput').value = '';
+            document.getElementById('adminPasswordInput').focus();
+        }
+
+        function closeLoginModal() { document.getElementById('loginOverlay').style.display = 'none'; }
+
+        function verifyAdminPassword() {
+            if (document.getElementById('adminPasswordInput').value === ADMIN_PASSWORD) {
+                sessionStorage.setItem('imani_auth', 'true');
+                closeLoginModal();
+                switchPage('admin');
+            } else {
+                alert('Palavra-passe incorreta.');
+            }
+        }
+        function handlePasswordKey(event) { if (event.key === 'Enter') verifyAdminPassword(); }
+
+        function atualizarEstadoPortalFormando() {
+            if (sessionStorage.getItem('aluno_auth') === 'true') {
+                document.getElementById('alunoLoginBoxArea').style.display = 'none';
+                document.getElementById('alunoDashboardArea').style.display = 'block';
+                
+                let alunoNome = sessionStorage.getItem('aluno_nome');
+                let alunoAvatar = sessionStorage.getItem('aluno_avatar') || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150";
+                
+                document.getElementById('alunoNomeDisplay').innerText = alunoNome;
+                document.getElementById('alunoAvatarDisplay').src = alunoAvatar;
+                document.getElementById('editNome').value = alunoNome;
+                document.getElementById('editAvatar').value = alunoAvatar;
+
+                renderAulasAluno();
+                renderDuvidasAluno();
+                renderForumAluno();
+                renderRecibosAluno();
+                renderQuizAluno();
+                renderSalaAoVivoAluno();
+                renderSubscricaoAluno();
+                verificarNotificacoesAluno();
+            } else {
+                document.getElementById('alunoLoginBoxArea').style.display = 'block';
+                document.getElementById('alunoDashboardArea').style.display = 'none';
+                document.getElementById('alunoUser').value = '';
+                document.getElementById('alunoPass').value = '';
+            }
+        }
+
+        function verifyAlunoLogin() {
+            const user = document.getElementById('alunoUser').value.trim();
+            const pass = document.getElementById('alunoPass').value.trim();
+            let inscricoesHistory = JSON.parse(localStorage.getItem('imani_inscricoes')) || [];
+            let alunoEncontrado = inscricoesHistory.find(item => 
+                (item.email === user || item.credencialUser === user) && item.credencialPass === pass && item.confirmado === true && item.ativo !== false
+            );
+
+            if (alunoEncontrado) {
+                sessionStorage.setItem('aluno_auth', 'true');
+                sessionStorage.setItem('aluno_curso', alunoEncontrado.curso);
+                sessionStorage.setItem('aluno_email', alunoEncontrado.email);
+                sessionStorage.setItem('aluno_nome', alunoEncontrado.nome);
+                sessionStorage.setItem('aluno_avatar', alunoEncontrado.avatar || "");
+                atualizarEstadoPortalFormando();
+            } else {
+                alert('Credenciais inválidas, conta inativa ou inscrição ainda não confirmada.');
+            }
+        }
+
+        function logoutAluno() {
+            sessionStorage.removeItem('aluno_auth');
+            sessionStorage.removeItem('aluno_curso');
+            sessionStorage.removeItem('aluno_email');
+            sessionStorage.removeItem('aluno_nome');
+            sessionStorage.removeItem('aluno_avatar');
+            atualizarEstadoPortalFormando();
+        }
+
+        function switchPage(pageId) {
+            document.querySelectorAll('.page-content').forEach(el => {
+                el.classList.remove('active');
+                el.style.display = 'none';
+            });
+            const target = document.getElementById('page-' + (pageId === 'site' ? 'site' : pageId));
+            if (target) {
+                target.style.display = 'block';
+                setTimeout(() => target.classList.add('active'), 10);
+            }
+            if (pageId === 'admin') {
+                renderAdminData();
+            } else if (pageId === 'portfolio-page') {
+                renderPortfolioPublico();
+            } else if (pageId === 'formacoes-page') {
+                renderCursosPublicos();
+                atualizarSelectsCursos();
+            } else if (pageId === 'portal-formando-page') {
+                atualizarEstadoPortalFormando();
+            }
+            window.scrollTo(0, 0);
+        }
+
+        function salvarPerfilAluno(event) {
+            event.preventDefault();
+            const emailAtual = sessionStorage.getItem('aluno_email');
+            const novoNome = document.getElementById('editNome').value.trim();
+            const novoAvatar = document.getElementById('editAvatar').value.trim();
+            const novaPass = document.getElementById('editPass').value.trim();
+
+            let inscricoesHistory = JSON.parse(localStorage.getItem('imani_inscricoes')) || [];
+            let alunoIdx = inscricoesHistory.findIndex(i => i.email === emailAtual);
+
+            if (alunoIdx !== -1) {
+                inscricoesHistory[alunoIdx].nome = novoNome;
+                if (novoAvatar) inscricoesHistory[alunoIdx].avatar = novoAvatar;
+                if (novaPass) inscricoesHistory[alunoIdx].credencialPass = novaPass;
+
+                localStorage.setItem('imani_inscricoes', JSON.stringify(inscricoesHistory));
+                sessionStorage.setItem('aluno_nome', novoNome);
+                if (novoAvatar) sessionStorage.setItem('aluno_avatar', novoAvatar);
+
+                alert('Perfil atualizado com sucesso!');
+                atualizarEstadoPortalFormando();
+            }
+        }
+
+        function renderQuizAluno() {
+            const area = document.getElementById('quizFormArea');
+            const alunoEmail = sessionStorage.getItem('aluno_email');
+            const cursoAluno = sessionStorage.getItem('aluno_curso');
+            
+            conteudosHistory = JSON.parse(localStorage.getItem('imani_conteudos')) || [];
+            let aulasCurso = conteudosHistory.filter(c => c.curso === cursoAluno && c.quiz);
+            let resultadosQuiz = JSON.parse(localStorage.getItem('quiz_' + alunoEmail)) || {};
+
+            if (aulasCurso.length === 0) {
+                area.innerHTML = `<p style="color: var(--text-gray); font-size: 0.9rem;">Ainda não existem testes de avaliação publicados para este curso.</p>`;
+                return;
+            }
+
+            area.innerHTML = '';
+            aulasCurso.forEach((aula, idx) => {
+                let quizKey = 'quiz_' + aula.id;
+                let aprovado = resultadosQuiz[quizKey] === true;
+
+                const div = document.createElement('div');
+                div.style.cssText = "background: var(--bg-main); padding: 18px; border-radius: 10px; border: 1px solid var(--border-color); margin-bottom: 15px;";
+                
+                if (aprovado) {
+                    div.innerHTML = `
+                        <p style="font-size: 0.95rem; font-weight: 600; color: var(--text-white); margin-bottom: 6px;">Avaliação: ${aula.titulo}</p>
+                        <p style="color: var(--success-green); font-size: 0.9rem; font-weight: 600;">✔ Teste Aprovado com Sucesso!</p>
+                    `;
+                } else {
+                    div.innerHTML = `
+                        <p style="font-size: 0.95rem; font-weight: 600; color: var(--text-white); margin-bottom: 8px;">Avaliação (${idx + 1}): ${aula.quiz.pergunta}</p>
+                        <div style="margin-bottom: 12px; font-size: 0.9rem;">
+                            <label style="display:block; margin-bottom:6px; cursor:pointer;"><input type="radio" name="resp_${aula.id}" value="A"> A) ${aula.quiz.opA}</label>
+                            <label style="display:block; margin-bottom:6px; cursor:pointer;"><input type="radio" name="resp_${aula.id}" value="B"> B) ${aula.quiz.opB}</label>
+                            <label style="display:block; margin-bottom:6px; cursor:pointer;"><input type="radio" name="resp_${aula.id}" value="C"> C) ${aula.quiz.opC}</label>
+                        </div>
+                        <button class="btn-blue" style="padding: 6px 14px; font-size: 0.85rem;" onclick="submeterQuizAula('${aula.id}', '${aula.quiz.correta}')"><i data-lucide="check"></i> Submeter Resposta</button>
+                    `;
+                }
+                area.appendChild(div);
+            });
+            lucide.createIcons();
+        }
+
+        function submeterQuizAula(aulaId, respostaCorreta) {
+            const resp = document.querySelector(`input[name="resp_${aulaId}"]:checked`);
+            if (!resp) {
+                alert('Selecione uma opção de resposta.');
+                return;
+            }
+
+            if (resp.value === respostaCorreta) {
+                const alunoEmail = sessionStorage.getItem('aluno_email');
+                let resultadosQuiz = JSON.parse(localStorage.getItem('quiz_' + alunoEmail)) || {};
+                resultadosQuiz['quiz_' + aulaId] = true;
+                localStorage.setItem('quiz_' + alunoEmail, JSON.stringify(resultadosQuiz));
+                alert('Parabéns! Resposta correta. Teste aprovado.');
+                renderQuizAluno();
+                renderAulasAluno();
+            } else {
+                alert('Resposta incorreta. Reveja a matéria do módulo e tente novamente.');
+            }
+        }
+
+        function pagarComMulticaixaExpress(event) {
+            event.preventDefault();
+            const telemovel = document.getElementById('multicaixaTelemovel').value.trim();
+            if (!telemovel) {
+                alert('Insira o número de telemóvel associado ao Multicaixa Express.');
+                return;
+            }
+
+            const alunoEmail = sessionStorage.getItem('aluno_email');
+            const alunoNome = sessionStorage.getItem('aluno_nome');
+            const cursoAluno = sessionStorage.getItem('aluno_curso');
+            
+            let financasHistory = JSON.parse(localStorage.getItem('imani_financas')) || [];
+            let inscricoesHistory = JSON.parse(localStorage.getItem('imani_inscricoes')) || [];
+
+            const novoPagamento = {
+                id: Date.now(),
+                date: new Date().toLocaleString('pt-AO'),
+                emailAluno: alunoEmail,
+                desc: 'Mensalidade Automática (MCX): ' + alunoNome + ' (' + cursoAluno + ')',
+                valor: 25000,
+                estado: 'Pago',
+                comprovativo: 'Multicaixa Express API Validated (' + telemovel + ')',
+                faturaEmitida: true
+            };
+
+            financasHistory.unshift(novoPagamento);
+            localStorage.setItem('imani_financas', JSON.stringify(financasHistory));
+
+            let alunoReg = inscricoesHistory.find(i => i.email === alunoEmail);
+            if (alunoReg) {
+                alunoReg.dataSubscricao = Date.now();
+                localStorage.setItem('imani_inscricoes', JSON.stringify(inscricoesHistory));
+            }
+
+            alert('Pagamento via Multicaixa Express aprovado com sucesso! A sua subscrição foi renovada e a fatura AGT gerada automaticamente.');
+            document.getElementById('multicaixaTelemovel').value = '';
+            renderRecibosAluno();
+            renderSubscricaoAluno();
+        }
+
+        function renderRecibosAluno() {
+            const container = document.getElementById('listaRecibosAluno');
+            const alunoEmail = sessionStorage.getItem('aluno_email');
+            let financasHistory = JSON.parse(localStorage.getItem('imani_financas')) || [];
+            let meusPagamentos = financasHistory.filter(f => f.emailAluno === alunoEmail || f.desc.includes(alunoEmail));
+
+            if (meusPagamentos.length === 0) {
+                container.innerHTML = `<p style="color: var(--text-gray); font-size: 0.9rem;">Nenhum registo de pagamento ou fatura encontrado.</p>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            meusPagamentos.forEach((p) => {
+                const div = document.createElement('div');
+                div.style.cssText = "background: var(--bg-main); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;";
+                div.innerHTML = `
+                    <div>
+                        <p style="font-size: 0.9rem; font-weight: 600;">${p.desc}</p>
+                        <small style="color: var(--text-gray);">${p.date} - ${p.valor.toLocaleString()} Kz</small>
+                    </div>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <span style="color: ${p.estado === 'Pago' ? 'var(--success-green)' : 'var(--warning-yellow)'}; font-size: 0.85rem; font-weight: 600;">${p.estado}</span>
+                        ${p.estado === 'Pago' ? `<button class="btn-outline" style="padding: 4px 10px; font-size: 0.75rem; border-color: var(--accent-cyan); color: var(--accent-cyan);" onclick="gerarFaturaAGT('${p.desc}', '${p.valor}', '${p.date}', '${p.emailAluno}')">📜 Fatura/Recibo AGT</button>` : ''}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function gerarFaturaAGT(desc, valor, data, email) {
+            const numeroFT = 'FT 2026/' + Math.floor(1000 + Math.random() * 9000);
+            const hashAGT = Math.random().toString(36).substring(2, 10).toUpperCase() + '-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+            const valorTotal = Number(valor);
+            const impostoIVA = valorTotal * 0.14; // IVA 14% padrão Angola
+            const baseTributavel = valorTotal / 1.14;
+
+            let win = window.open('', '_blank');
+            win.document.write(`
+                <html>
+                <head>
+                    <title>Fatura Certificada AGT - IMANI STUDIO</title>
+                    <style>
+                        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px; color: #111; max-width: 800px; margin: 0 auto; background: #fff; }
+                        .header { display: flex; justify-content: space-between; border-bottom: 2px solid #2563eb; padding-bottom: 20px; margin-bottom: 20px; }
+                        .company-info h2 { color: #2563eb; margin-bottom: 5px; }
+                        .invoice-info { text-align: right; }
+                        .details { margin-bottom: 30px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
+                        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+                        th, td { padding: 12px; border-bottom: 1px solid #cbd5e1; text-align: left; font-size: 0.95rem; }
+                        th { background: #2563eb; color: white; }
+                        .totals { text-align: right; margin-bottom: 30px; font-size: 1rem; }
+                        .footer-agt { border-top: 1px dashed #cbd5e1; padding-top: 15px; font-size: 0.85rem; color: #475569; text-align: center; }
+                        @media print { body { padding: 20px; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <div class="company-info">
+                            <h2>IMANI STUDIO, LDA</h2>
+                            <p>Luanda, Angola</p>
+                            <p><b>NIF:</b> 5000000000</p>
+                            <p><b>Email:</b> contacto@imanistudio.com</p>
+                        </div>
+                        <div class="invoice-info">
+                            <h3 style="color: #1e3a8a; margin-bottom: 5px;">FATURA / RECIBO</h3>
+                            <p><b>Nº Documento:</b> ${numeroFT}</p>
+                            <p><b>Data de Emissão:</b> ${data}</p>
+                            <p><b>Original / Certificado AGT</b></p>
+                        </div>
+                    </div>
+
+                    <div class="details">
+                        <p><b>Dados do Adquirente / Formando:</b></p>
+                        <p><b>Email:</b> ${email}</p>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Descrição do Serviço / Formação</th>
+                                <th>Qtd</th>
+                                <th>Taxa IVA</th>
+                                <th>Incidência (Kz)</th>
+                                <th>Total (Kz)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>${desc}</td>
+                                <td>1</td>
+                                <td>14%</td>
+                                <td>${baseTributavel.toLocaleString('pt-AO', {maximumFractionDigits: 2})}</td>
+                                <td><b>${valorTotal.toLocaleString('pt-AO')} Kz</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="totals">
+                        <p>Subtotal (Incidência): ${baseTributavel.toLocaleString('pt-AO', {maximumFractionDigits: 2})} Kz</p>
+                        <p>Total IVA (14%): ${impostoIVA.toLocaleString('pt-AO', {maximumFractionDigits: 2})} Kz</p>
+                        <h3 style="margin-top: 8px; color: #2563eb;">Total a Pagar: ${valorTotal.toLocaleString('pt-AO')} Kz</h3>
+                    </div>
+
+                    <div class="footer-agt">
+                        <p>Processado por programa certificado nº 000/AGT/2026 | IMANI STUDIO PWA</p>
+                        <p><b>Hash de Controlo AGT:</b> ${hashAGT}</p>
+                        <p>Documento emitido em conformidade com as normas fiscais aplicáveis da República de Angola.</p>
+                    </div>
+                    <script>
+                        window.onload = function() { window.print(); }
+                    <\/script>
+                </body>
+                </html>
+            `);
+            win.document.close();
+        }
+
+        function gerarCertificadoOficial() {
+            const nomeAluno = sessionStorage.getItem('aluno_nome');
+            const cursoAluno = sessionStorage.getItem('aluno_curso');
+            const dataEmissao = new Date().toLocaleDateString('pt-AO');
+            const codigoValidacao = 'IMANI-CERT-' + Math.floor(100000 + Math.random() * 900000);
+
+            let win = window.open('', '_blank');
+            win.document.write(`
+                <html>
+                <head>
+                    <title>Certificado Digital Oficial - IMANI STUDIO</title>
+                    <style>
+                        body { background: #020408; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+                        .certificate { width: 950px; padding: 50px; border: 8px double #00f0ff; background: #080e1d; text-align: center; position: relative; box-shadow: 0 0 60px rgba(0,240,255,0.4); border-radius: 12px; }
+                        .certificate h1 { font-size: 2.8rem; color: #00f0ff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 20px rgba(0,240,255,0.5); }
+                        .certificate h2 { font-size: 1.2rem; color: #94a3b8; font-weight: normal; margin-bottom: 30px; letter-spacing: 2px; }
+                        .certificate p { font-size: 1.1rem; color: #cbd5e1; margin-bottom: 15px; }
+                        .student-name { font-size: 2.3rem; font-weight: bold; color: #ffffff; border-bottom: 3px solid #2563eb; display: inline-block; padding: 0 25px 8px; margin: 15px 0 25px; text-shadow: 0 0 15px rgba(37,99,235,0.6); }
+                        .course-name { font-size: 1.6rem; color: #00f0ff; font-weight: bold; margin-bottom: 30px; }
+                        .footer-section { display: flex; justify-content: space-between; align-items: center; margin-top: 50px; padding: 0 30px; }
+                        .signature { text-align: center; border-top: 1px solid #94a3b8; width: 260px; padding-top: 8px; font-size: 0.9rem; color: #94a3b8; }
+                        .seal { border: 2px solid #10b981; color: #10b981; padding: 10px 15px; border-radius: 50%; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; width: 90px; height: 90px; display: flex; align-items: center; justify-content: center; transform: rotate(-12deg); box-shadow: 0 0 15px rgba(16,185,129,0.3); }
+                        .validation-code { margin-top: 30px; font-size: 0.85rem; color: #64748b; letter-spacing: 1px; }
+                        @media print { 
+                            body { background: white; color: #000; } 
+                            .certificate { border: 8px double #2563eb; box-shadow: none; background: white; color: #111; } 
+                            .certificate h1, .certificate h2, .course-name { color: #111; } 
+                            .student-name { color: #2563eb; border-bottom-color: #2563eb; }
+                            .certificate p { color: #333; }
+                            .signature { color: #555; border-top-color: #555; }
+                            .validation-code { color: #666; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="certificate">
+                        <h1>IMANI STUDIO</h1>
+                        <h2>ACADEMIA DE FORMAÇÃO PROFISSIONAL</h2>
+                        <p>Certificamos que o(a) formando(a)</p>
+                        <div class="student-name">${nomeAluno}</div>
+                        <p>concluiu com êxito e aproveitamento total a formação profissional em</p>
+                        <div class="course-name">${cursoAluno}</div>
+                        <p>Luanda, Angola — Emitido em ${dataEmissao}</p>
+                        <div class="footer-section">
+                            <div class="signature">Direção Académica<br><small>IMANI STUDIO, Lda</small></div>
+                            <div class="seal">VERIFICADO & ASSINADO</div>
+                            <div class="signature">Formador Responsável<br><small>Especialista da Área</small></div>
+                        </div>
+                        <div class="validation-code">Código de Autenticidade Digital: <b>${codigoValidacao}</b> (Certificado Válido e Registado)</div>
+                    </div>
+                    <script>
+                        window.onload = function() { window.print(); }
+                    <\/script>
+                </body>
+                </html>
+            `);
+            win.document.close();
+        }
+
+        function verificarNotificacoesAluno() {
+            const banner = document.getElementById('alunoNotificacaoBanner');
+            const alunoEmail = sessionStorage.getItem('aluno_email');
+            const cursoAluno = sessionStorage.getItem('aluno_curso');
+            if (!banner) return;
+
+            duvidasHistory = JSON.parse(localStorage.getItem('imani_duvidas')) || [];
+            let duvidasRespondidas = duvidasHistory.filter(d => d.alunoEmail === alunoEmail && d.estado === 'Respondido' && !d.lidoPeloAluno);
+            
+            conteudosHistory = JSON.parse(localStorage.getItem('imani_conteudos')) || [];
+            let aulasNovas = conteudosHistory.filter(c => c.curso === cursoAluno && !c.visto);
+
+            let avisosHtml = '';
+            if (duvidasRespondidas.length > 0) {
+                avisosHtml += `<div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;"><i data-lucide="bell" style="color: var(--accent-cyan);" size="18"></i><span><b>O formador respondeu à sua dúvida recente!</b> Verifique na caixa de dúvidas.</span></div>`;
+            }
+            if (aulasNovas.length > 0) {
+                avisosHtml += `<div style="display:flex; align-items:center; gap:10px;"><i data-lucide="video" style="color: var(--success-green);" size="18"></i><span><b>Novo módulo ou aula publicada!</b> Verifique a lista de aulas.</span></div>`;
+            }
+
+            if (avisosHtml !== '') {
+                banner.className = "notification-banner";
+                banner.innerHTML = `<div>${avisosHtml}</div><button class="btn-outline" style="padding: 4px 10px; font-size: 0.75rem;" onclick="fecharNotificacao()">Dispensar</button>`;
+                lucide.createIcons();
+            } else {
+                banner.className = "";
+                banner.innerHTML = '';
+            }
+        }
+
+        function fecharNotificacao() {
+            const alunoEmail = sessionStorage.getItem('aluno_email');
+            duvidasHistory = JSON.parse(localStorage.getItem('imani_duvidas')) || [];
+            duvidasHistory.forEach(d => { if (d.alunoEmail === alunoEmail) d.lidoPeloAluno = true; });
+            localStorage.setItem('imani_duvidas', JSON.stringify(duvidasHistory));
+            document.getElementById('alunoNotificacaoBanner').innerHTML = '';
+            document.getElementById('alunoNotificacaoBanner').className = '';
+        }
+
+        let forumHistory = JSON.parse(localStorage.getItem('imani_forum')) || [];
+
+        function enviarMensagemForum(event) {
+            event.preventDefault();
+            const texto = document.getElementById('forumTexto').value.trim();
+            if (!texto) return;
+
+            const novaMsg = {
+                id: Date.now(),
+                date: new Date().toLocaleString('pt-AO'),
+                alunoNome: sessionStorage.getItem('aluno_nome'),
+                alunoEmail: sessionStorage.getItem('aluno_email'),
+                curso: sessionStorage.getItem('aluno_curso'),
+                mensagem: texto,
+                respostas: []
+            };
+
+            forumHistory.unshift(novaMsg);
+            localStorage.setItem('imani_forum', JSON.stringify(forumHistory));
+            alert('Tópico publicado no fórum da turma!');
+            document.getElementById('forumTexto').value = '';
+            renderForumAluno();
+        }
+
+        function responderTopicoForum(topicoId) {
+            let respostaTexto = prompt("Escreva a sua resposta para este tópico:");
+            if (respostaTexto !== null && respostaTexto.trim() !== "") {
+                forumHistory = JSON.parse(localStorage.getItem('imani_forum')) || [];
+                let topico = forumHistory.find(f => f.id === topicoId);
+                if (topico) {
+                    if (!topico.respostas) topico.respostas = [];
+                    topico.respostas.push({
+                        id: Date.now(),
+                        date: new Date().toLocaleString('pt-AO'),
+                        alunoNome: sessionStorage.getItem('aluno_nome'),
+                        alunoEmail: sessionStorage.getItem('aluno_email'),
+                        mensagem: respostaTexto.trim()
+                    });
+                    localStorage.setItem('imani_forum', JSON.stringify(forumHistory));
+                    renderForumAluno();
+                    alert('Resposta publicada com sucesso!');
+                }
+            }
+        }
+
+        function renderForumAluno() {
+            const container = document.getElementById('listaMensagensForum');
+            const cursoAluno = sessionStorage.getItem('aluno_curso');
+            forumHistory = JSON.parse(localStorage.getItem('imani_forum')) || [];
+            let mensagensCurso = forumHistory.filter(f => f.curso === cursoAluno);
+
+            if (mensagensCurso.length === 0) {
+                container.innerHTML = `<p style="color: var(--text-gray); font-size: 0.9rem;">Ainda não existem publicações no fórum deste curso.</p>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            mensagensCurso.forEach(m => {
+                const div = document.createElement('div');
+                div.style.cssText = "background: var(--bg-main); padding: 16px; border-radius: 10px; border: 1px solid var(--border-color); margin-bottom: 14px;";
+                
+                let respostasHtml = '';
+                if (m.respostas && m.respostas.length > 0) {
+                    m.respostas.forEach(r => {
+                        respostasHtml += `
+                            <div style="background: rgba(30,58,138,0.2); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--accent-cyan); margin-top: 10px; margin-left: 20px;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--accent-cyan); margin-bottom: 4px;">
+                                    <span><b>${r.alunoNome}</b></span>
+                                    <span style="color: var(--text-gray);">${r.date}</span>
+                                </div>
+                                <p style="font-size: 0.9rem; color: var(--text-white);">${r.mensagem}</p>
+                            </div>
+                        `;
+                    });
+                }
+
+                div.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--accent-cyan); margin-bottom: 6px;">
+                        <span><b>${m.alunoNome}</b> (Tópico Principal)</span>
+                        <span style="color: var(--text-gray);">${m.date}</span>
+                    </div>
+                    <p style="font-size: 0.95rem; color: var(--text-white); margin-bottom: 12px;">${m.mensagem}</p>
+                    <button class="btn-outline" style="padding: 4px 12px; font-size: 0.8rem;" onclick="responderTopicoForum(${m.id})"><i data-lucide="corner-down-right" size="14"></i> Responder</button>
+                    ${respostasHtml}
+                `;
+                container.appendChild(div);
+            });
+            lucide.createIcons();
+        }
+
+        function removerMensagemForumAdmin(index) {
+            forumHistory = JSON.parse(localStorage.getItem('imani_forum')) || [];
+            forumHistory.splice(index, 1);
+            localStorage.setItem('imani_forum', JSON.stringify(forumHistory));
+            renderAdminData();
+        }
+
+        let duvidasHistory = JSON.parse(localStorage.getItem('imani_duvidas')) || [];
+
+        function enviarDuvidaAluno(event) {
+            event.preventDefault();
+            const texto = document.getElementById('duvidaTexto').value.trim();
+            if (!texto) return;
+
+            const novaDuvida = {
+                id: Date.now(),
+                date: new Date().toLocaleString('pt-AO'),
+                alunoNome: sessionStorage.getItem('aluno_nome'),
+                alunoEmail: sessionStorage.getItem('aluno_email'),
+                curso: sessionStorage.getItem('aluno_curso'),
+                pergunta: texto,
+                resposta: "",
+                estado: "Pendente",
+                lidoPeloAluno: false
+            };
+
+            duvidasHistory.unshift(novaDuvida);
+            localStorage.setItem('imani_duvidas', JSON.stringify(duvidasHistory));
+            alert('Dúvida enviada com sucesso! O formador irá responder em breve.');
+            document.getElementById('duvidaTexto').value = '';
+            renderDuvidasAluno();
+        }
+
+        function renderDuvidasAluno() {
+            const container = document.getElementById('listaDuvidasAluno');
+            const alunoEmail = sessionStorage.getItem('aluno_email');
+            duvidasHistory = JSON.parse(localStorage.getItem('imani_duvidas')) || [];
+            let minhasDuvidas = duvidasHistory.filter(d => d.alunoEmail === alunoEmail);
+
+            if (minhasDuvidas.length === 0) {
+                container.innerHTML = `<p style="color: var(--text-gray); font-size: 0.9rem;">Nenhuma dúvida colocada.</p>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            minhasDuvidas.forEach(d => {
+                const div = document.createElement('div');
+                div.style.cssText = "background: var(--bg-main); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 10px;";
+                div.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-gray); margin-bottom: 4px;">
+                        <span>${d.date}</span>
+                        <span style="color: ${d.estado === 'Respondido' ? 'var(--success-green)' : 'var(--warning-yellow)'}; font-weight: 600;">${d.estado}</span>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 6px;"><b>Q:</b> ${d.pergunta}</p>
+                    ${d.resposta ? `<p style="font-size: 0.9rem; color: var(--accent-cyan); background: rgba(0,240,255,0.05); padding: 8px; border-radius: 6px;"><b>R:</b> ${d.resposta}</p>` : '<p style="font-size: 0.8rem; color: var(--text-gray); font-style: italic;">A aguardar resposta...</p>'}
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function responderDuvidaAdmin(index) {
+            let respostaTxt = prompt("Escreva a resposta para o aluno:");
+            if (respostaTxt !== null && respostaTxt.trim() !== "") {
+                duvidasHistory = JSON.parse(localStorage.getItem('imani_duvidas')) || [];
+                duvidasHistory[index].resposta = respostaTxt.trim();
+                duvidasHistory[index].estado = "Respondido";
+                duvidasHistory[index].lidoPeloAluno = false;
+                localStorage.setItem('imani_duvidas', JSON.stringify(duvidasHistory));
+                renderAdminData();
+                alert('Resposta enviada com sucesso!');
+            }
+        }
+
+        function removerDuvidaAdmin(index) {
+            duvidasHistory = JSON.parse(localStorage.getItem('imani_duvidas')) || [];
+            duvidasHistory.splice(index, 1);
+            localStorage.setItem('imani_duvidas', JSON.stringify(duvidasHistory));
+            renderAdminData();
+        }
+
+        let portfolioHistory = JSON.parse(localStorage.getItem('imani_portfolio')) || [
+            { id: 1, titulo: "Branding Corporativo", img: "https://images.unsplash.com/photo-1541462608143-67571c6738dd?auto=format&fit=crop&q=80&w=600", desc: "Desenvolvimento integral de identidade visual, manuais de marca e sinalética institucional." },
+            { id: 2, titulo: "Produção de Videoclipe", img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=600", desc: "Captação áudio em estúdio profissional e realização de videoclipe cinematográfico." },
+            { id: 3, titulo: "Plataforma Web E-commerce", img: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&q=80&w=600", desc: "Criação de website responsivo otimizado para vendas online e conversão de tráfego." }
+        ];
+
+        function adicionarProjeto(event) {
+            event.preventDefault();
+            const novoProjeto = {
+                id: Date.now(),
+                titulo: document.getElementById('projTitulo').value,
+                img: document.getElementById('projImg').value,
+                desc: document.getElementById('projDesc').value
+            };
+            portfolioHistory.unshift(novoProjeto);
+            localStorage.setItem('imani_portfolio', JSON.stringify(portfolioHistory));
+            alert('Projeto adicionado ao portefólio com sucesso!');
+            event.target.reset();
+            renderAdminData();
+            renderPortfolioPublico();
+        }
+
+        function renderPortfolioPublico() {
+            const container = document.getElementById('portfolioContainer');
+            if (!container) return;
+            portfolioHistory = JSON.parse(localStorage.getItem('imani_portfolio')) || portfolioHistory;
+            
+            container.innerHTML = '';
+            portfolioHistory.forEach(proj => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `
+                    <div class="card-img-wrapper"><img src="${proj.img}" class="card-img" alt="${proj.titulo}"></div>
+                    <div class="card-body">
+                        <h3><i data-lucide="briefcase" size="22"></i> ${proj.titulo}</h3>
+                        <p>${proj.desc}</p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            lucide.createIcons();
+        }
+
+        let inscricoesHistory = JSON.parse(localStorage.getItem('imani_inscricoes')) || [];
+        function enviarInscricao(event) {
+            event.preventDefault();
+            const novaInscricao = {
+                id: Date.now(),
+                date: new Date().toLocaleString('pt-AO'),
+                dataSubscricao: Date.now(),
+                nome: document.getElementById('nomeAluno').value,
+                tel: document.getElementById('telAluno').value,
+                email: document.getElementById('emailAluno').value,
+                curso: document.getElementById('cursoAluno').value,
+                plano: document.getElementById('planoAluno').value,
+                confirmado: false,
+                ativo: true,
+                avatar: "",
+                credencialUser: document.getElementById('emailAluno').value,
+                credencialPass: 'imani' + Math.floor(1000 + Math.random() * 9000)
+            };
+            inscricoesHistory.unshift(novaInscricao);
+            localStorage.setItem('imani_inscricoes', JSON.stringify(inscricoesHistory));
+
+            let financasHistory = JSON.parse(localStorage.getItem('imani_financas')) || [];
+            financasHistory.unshift({
+                id: Date.now(),
+                date: new Date().toLocaleString('pt-AO'),
+                emailAluno: novaInscricao.email,
+                desc: 'Inscrição (' + novaInscricao.plano + '): ' + novaInscricao.nome + ' (' + novaInscricao.curso + ')',
+                valor: novaInscricao.plano === 'Mensal' ? 25000 : 75000,
+                estado: 'Pendente',
+                comprovativo: 'Pendente Pagamento Gateway'
+            });
+            localStorage.setItem('imani_financas', JSON.stringify(financasHistory));
+
+            alert('Inscrição submetida! Aguarde confirmação para receber credenciais.');
+            document.getElementById('inscricaoForm').reset();
+            switchPage('site');
+        }
+
+        let conteudosHistory = JSON.parse(localStorage.getItem('imani_conteudos')) || [];
+        function adicionarConteudoComQuiz(event) {
+            event.preventDefault();
+            const novoConteudo = {
+                id: Date.now(),
+                curso: document.getElementById('aulaCurso').value,
+                titulo: document.getElementById('aulaTitulo').value,
+                link: document.getElementById('aulaLink').value,
+                pdf: document.getElementById('aulaPdf').value,
+                desc: document.getElementById('aulaDesc').value,
+                quiz: {
+                    pergunta: document.getElementById('quizPergunta').value.trim(),
+                    opA: document.getElementById('quizOpA').value.trim(),
+                    opB: document.getElementById('quizOpB').value.trim(),
+                    opC: document.getElementById('quizOpC').value.trim(),
+                    correta: document.getElementById('quizCorreta').value
+                }
+            };
+            conteudosHistory.unshift(novoConteudo);
+            localStorage.setItem('imani_conteudos', JSON.stringify(conteudosHistory));
+            alert('Aula, Manual PDF e Teste de Avaliação publicados com sucesso!');
+            event.target.reset();
+            renderAdminData();
+        }
+
+        function confirmarPagamentoAdmin(index) {
+            let financasHistory = JSON.parse(localStorage.getItem('imani_financas')) || [];
+            financasHistory[index].estado = 'Pago';
+            localStorage.setItem('imani_financas', JSON.stringify(financasHistory));
+
+            let emailAluno = financasHistory[index].emailAluno;
+            let inscricoesHistory = JSON.parse(localStorage.getItem('imani_inscricoes')) || [];
+            let alunoReg = inscricoesHistory.find(i => i.email === emailAluno);
+            if (alunoReg) {
+                alunoReg.dataSubscricao = Date.now();
+                localStorage.setItem('imani_inscricoes', JSON.stringify(inscricoesHistory));
+            }
+
+            renderAdminData();
+            alert('Pagamento confirmado e subscrição renovada com sucesso!');
+        }
+
+        function exportarDadosCSV() {
+            inscricoesHistory = JSON.parse(localStorage.getItem('imani_inscricoes')) || [];
+            let csvContent = "data:text/csv;charset=utf-8,Data,Nome,Email,Telefone,Curso,Plano,Estado\n";
+            
+            inscricoesHistory.forEach(item => {
+                let status = item.confirmado ? "Confirmado" : "Pendente";
+                csvContent += `"${item.date}","${item.nome}","${item.email}","${item.tel}","${item.curso}","${item.plano || 'Mensal'}","${status}"\n`;
+            });
+
+            let encodedUri = encodeURI(csvContent);
+            let link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "relatorio_inscricoes_imani.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function alternarEstadoConta(index) {
+            inscricoesHistory[index].ativo = inscricoesHistory[index].ativo === false ? true : false;
+            localStorage.setItem('imani_inscricoes', JSON.stringify(inscricoesHistory));
+            renderAdminData();
+        }
+
+        let receitaChartInstance = null;
+        let inscricoesChartInstance = null;
+
+        function renderizarGraficosAdmin() {
+            let financasHistory = JSON.parse(localStorage.getItem('imani_financas')) || [];
+            let inscricoesHistory = JSON.parse(localStorage.getItem('imani_inscricoes')) || [];
+            let cursosHistory = JSON.parse(localStorage.getItem('imani_cursos')) || [];
+
+            let meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
+            let valoresReceita = [0, 0, 0, 0, 0, 0];
+            
+            financasHistory.forEach(f => {
+                if (f.estado === 'Pago') {
+                    valoresReceita[2] += f.valor;
+                }
+            });
+
+            if (valoresReceita.every(v => v === 0)) {
+                valoresReceita = [120000, 250000, 450000, 380000, 520000, 680000];
+            }
+
+            const ctxReceita = document.getElementById('receitaChart').getContext('2d');
+            if (receitaChartInstance) receitaChartInstance.destroy();
+            receitaChartInstance = new Chart(ctxReceita, {
+                type: 'line',
+                data: {
+                    labels: meses,
+                    datasets: [{
+                        label: 'Receita (Kz)',
+                        data: valoresReceita,
+                        borderColor: '#00f0ff',
+                        backgroundColor: 'rgba(0, 240, 255, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { labels: { color: '#ffffff' } } },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: '#1e3a8a' } },
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: '#1e3a8a' } }
+                    }
+                }
+            });
+
+            let labelsCursos = [];
+            let countsCursos = [];
+            cursosHistory.forEach(c => {
+                let nomeCurto = c.nome.length > 20 ? c.nome.substring(0, 20) + '...' : c.nome;
+                labelsCursos.push(nomeCurto);
+                let totalInsc = inscricoesHistory.filter(i => i.curso.includes(c.nome)).length;
+                countsCursos.push(totalInsc > 0 ? totalInsc : Math.floor(1 + Math.random() * 5));
+            });
+
+            const ctxInscricoes = document.getElementById('inscricoesChart').getContext('2d');
+            if (inscricoesChartInstance) inscricoesChartInstance.destroy();
+            inscricoesChartInstance = new Chart(ctxInscricoes, {
+                type: 'bar',
+                data: {
+                    labels: labelsCursos.length > 0 ? labelsCursos : ['Marketing', 'Design', 'Áudio'],
+                    datasets: [{
+                        label: 'Nº de Formandos',
+                        data: countsCursos.length > 0 ? countsCursos : [8, 12, 6],
+                        backgroundColor: ['#2563eb', '#00f0ff', '#10b981', '#f59e0b'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { labels: { color: '#ffffff' } } },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: '#1e3a8a' } },
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: '#1e3a8a' } }
+                    }
+                }
+            });
+        }
+
+        function renderAdminData() {
+            const tbody = document.getElementById('adminTableBody');
+            const tbodyDuvidas = document.getElementById('adminDuvidasBody');
+            const tbodyForum = document.getElementById('adminForumBody');
+            const tbodyFinancas = document.getElementById('adminFinancasBody');
+            const statInsc = document.getElementById('statInscricoes');
+            const statCursos = document.getElementById('statCursos');
+            const statSubVencidas = document.getElementById('statSubscricoesVencidas');
+            const tbodyAulas = document.getElementById('adminAulasBody');
+            const tbodyCursosAdmin = document.getElementById('adminCursosBody');
+            const statReceita = document.getElementById('statReceita');
+
+            if (!tbody) return;
+            inscricoesHistory = JSON.parse(localStorage.getItem('imani_inscricoes')) || [];
+            conteudosHistory = JSON.parse(localStorage.getItem('imani_conteudos')) || [];
+            duvidasHistory = JSON.parse(localStorage.getItem('imani_duvidas')) || [];
+            forumHistory = JSON.parse(localStorage.getItem('imani_forum')) || [];
+            cursosHistory = JSON.parse(localStorage.getItem('imani_cursos')) || cursosHistory;
+            let financasHistory = JSON.parse(localStorage.getItem('imani_financas')) || [];
+
+            statInsc.innerText = inscricoesHistory.length;
+            statCursos.innerText = cursosHistory.length;
+
+            let vencidasCount = 0;
+            inscricoesHistory.forEach(i => {
+                if (i.plano === 'Mensal') {
+                    let diff = Math.floor((Date.now() - (i.dataSubscricao || i.id)) / (1000 * 60 * 60 * 24));
+                    if (diff > 30) vencidasCount++;
+                }
+            });
+            statSubVencidas.innerText = vencidasCount;
+
+            let totalPago = 0;
+            financasHistory.forEach(t => { if (t.estado === 'Pago') totalPago += t.valor; });
+            statReceita.innerText = totalPago.toLocaleString() + ' Kz';
+
+            tbodyCursosAdmin.innerHTML = cursosHistory.length === 0 ? `<tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Nenhum curso registado.</td></tr>` : '';
+            cursosHistory.forEach((c, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${c.nome}</b><br><small>${c.turma}</small></td>
+                    <td>${c.carga}</td>
+                    <td>${c.inicio} até ${c.fim}</td>
+                    <td><button class="btn-outline" style="padding: 4px 10px; font-size: 0.8rem;" onclick="removerCursoTurma(${index})">Remover</button></td>
+                `;
+                tbodyCursosAdmin.appendChild(tr);
+            });
+
+            tbodyFinancas.innerHTML = financasHistory.length === 0 ? `<tr><td colspan="6" style="text-align: center; color: var(--text-gray);">Nenhuma transação registada.</td></tr>` : '';
+            financasHistory.forEach((f, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${f.date}</td>
+                    <td><b>${f.desc}</b></td>
+                    <td>${f.valor.toLocaleString()} Kz</td>
+                    <td>${f.comprovativo}</td>
+                    <td><span style="color: ${f.estado === 'Pago' ? 'var(--success-green)' : 'var(--warning-yellow)'}; font-weight: 600;">${f.estado}</span></td>
+                    <td>
+                        ${f.estado === 'Pendente' ? `<button class="btn-blue" style="padding: 4px 10px; font-size: 0.8rem;" onclick="confirmarPagamentoAdmin(${index})">Confirmar Pagamento</button>` : `<button class="btn-outline" style="padding: 4px 10px; font-size: 0.8rem; border-color: var(--accent-cyan); color: var(--accent-cyan);" onclick="gerarFaturaAGT('${f.desc}', '${f.valor}', '${f.date}', '${f.emailAluno}')">📜 Emitir Fatura AGT</button>`}
+                    </td>
+                `;
+                tbodyFinancas.appendChild(tr);
+            });
+
+            tbodyForum.innerHTML = forumHistory.length === 0 ? `<tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Nenhuma mensagem no fórum.</td></tr>` : '';
+            forumHistory.forEach((m, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${m.alunoNome}</b><br><small>${m.date}</small></td>
+                    <td>${m.curso}</td>
+                    <td>${m.mensagem} ${m.respostas && m.respostas.length > 0 ? `<br><small style="color: var(--accent-cyan);">(${m.respostas.length} respostas aninhadas)</small>` : ''}</td>
+                    <td><button class="btn-outline" style="padding: 4px 10px; font-size: 0.8rem;" onclick="removerMensagemForumAdmin(${index})">Apagar</button></td>
+                `;
+                tbodyForum.appendChild(tr);
+            });
+
+            tbodyDuvidas.innerHTML = duvidasHistory.length === 0 ? `<tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Nenhuma dúvida registada.</td></tr>` : '';
+            duvidasHistory.forEach((d, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${d.alunoNome}</b><br><small>${d.date}</small></td>
+                    <td>${d.curso}</td>
+                    <td>${d.pergunta}</td>
+                    <td>
+                        <span style="color: ${d.estado === 'Respondido' ? 'var(--success-green)' : 'var(--warning-yellow)'}; font-weight: 600;">${d.estado}</span><br>
+                        ${d.resposta ? `<small>Resp: ${d.resposta}</small><br>` : ''}
+                        <button class="btn-blue" style="padding: 4px 10px; font-size: 0.8rem; margin-top: 4px;" onclick="responderDuvidaAdmin(${index})">Responder</button>
+                        <button class="btn-outline" style="padding: 4px 10px; font-size: 0.8rem; margin-top: 4px;" onclick="removerDuvidaAdmin(${index})">Apagar</button>
+                    </td>
+                `;
+                tbodyDuvidas.appendChild(tr);
+            });
+
+            tbody.innerHTML = inscricoesHistory.length === 0 ? `<tr><td colspan="5" style="text-align: center; color: var(--text-gray);">Nenhuma inscrição registada.</td></tr>` : '';
+            inscricoesHistory.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                let isAtivo = item.ativo !== false;
+                let plano = item.plano || 'Mensal';
+                let diffDias = Math.floor((Date.now() - (item.dataSubscricao || item.id)) / (1000 * 60 * 60 * 24));
+                let subVencida = plano === 'Mensal' && diffDias > 30;
+                
+                let cleanTel = item.tel.replace(/[^0-9]/g, '');
+                let msgWhats = encodeURIComponent(`Olá ${item.nome}! A sua subscrição mensal na IMANI STUDIO para o curso "${item.curso}" encontra-se ${subVencida ? 'vencida. Por favor efetue o pagamento da mensalidade' : 'ativa'}. Credenciais:\nUtilizador: ${item.credencialUser}\nPalavra-passe: ${item.credencialPass}`);
+                let whatsLink = `https://wa.me/${cleanTel}?text=${msgWhats}`;
+
+                let statusHtml = item.confirmado 
+                    ? `<span style="color: ${subVencida ? 'var(--warning-yellow)' : 'var(--success-green)'};"><b>${subVencida ? 'Subscrição Vencida' : 'Ativa'}</b> (${plano})<br><small>User: ${item.credencialUser}<br>Pass: <b>${item.credencialPass}</b></small><br><a href="${whatsLink}" target="_blank" class="btn-outline" style="padding: 2px 8px; font-size: 0.7rem; margin-top: 4px; display:inline-block; border-color: var(--success-green); color: var(--success-green);">💬 Enviar Lembrete WhatsApp</a></span>`
+                    : `<button class="btn-blue" style="padding: 4px 10px; font-size: 0.8rem;" onclick="confirmarInscricao(${index})">Confirmar & Gerar Credencial</button>`;
+
+                tr.innerHTML = `
+                    <td>${item.date}</td>
+                    <td><b>${item.nome}</b><br>${item.email} (${item.tel})</td>
+                    <td>${item.curso}</td>
+                    <td>${statusHtml}</td>
+                    <td>
+                        <button class="btn-outline" style="padding: 4px 10px; font-size: 0.8rem; margin-bottom: 4px;" onclick="alternarEstadoConta(${index})">${isAtivo ? 'Bloquear Acesso' : 'Ativar Acesso'}</button><br>
+                        <button class="btn-outline" style="padding: 4px 10px; font-size: 0.8rem;" onclick="removerInscricao(${index})">Remover</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            tbodyAulas.innerHTML = conteudosHistory.length === 0 ? `<tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Nenhum conteúdo publicado.</td></tr>` : '';
+            conteudosHistory.forEach((conteudo, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${conteudo.curso}</b></td>
+                    <td>${conteudo.titulo} <br><small style="color: var(--accent-cyan);">Quiz: ${conteudo.quiz ? conteudo.quiz.pergunta : 'N/D'}</small></td>
+                    <td>${conteudo.pdf ? `<a href="${conteudo.pdf}" target="_blank" style="color: var(--accent-cyan);">📄 Ver PDF</a>` : '<span style="color: var(--text-gray);">Sem PDF</span>'}</td>
+                    <td><button class="btn-outline" style="padding: 4px 10px; font-size: 0.8rem;" onclick="removerConteudo(${index})">Remover</button></td>
+                `;
+                tbodyAulas.appendChild(tr);
+            });
+            lucide.createIcons();
+
+            renderizarGraficosAdmin();
+        }
+
+        function confirmarInscricao(index) {
+            inscricoesHistory[index].confirmado = true;
+            inscricoesHistory[index].ativo = true;
+            localStorage.setItem('imani_inscricoes', JSON.stringify(inscricoesHistory));
+            renderAdminData();
+            alert('Inscrição confirmada e credenciais geradas! Clique no botão do WhatsApp para enviar os acessos ao formando.');
+        }
+
+        function removerInscricao(index) {
+            inscricoesHistory.splice(index, 1);
+            localStorage.setItem('imani_inscricoes', JSON.stringify(inscricoesHistory));
+            renderAdminData();
+        }
+
+        function removerConteudo(index) {
+            conteudosHistory.splice(index, 1);
+            localStorage.setItem('imani_conteudos', JSON.stringify(conteudosHistory));
+            renderAdminData();
+        }
+
+        function renderAulasAluno() {
+            const container = document.getElementById('listaAulasAluno');
+            const cursoAluno = sessionStorage.getItem('aluno_curso');
+            const alunoEmail = sessionStorage.getItem('aluno_email');
+            
+            conteudosHistory = JSON.parse(localStorage.getItem('imani_conteudos')) || [];
+            let aulasFiltradas = conteudosHistory.filter(c => c.curso === cursoAluno);
+            let progressoMap = JSON.parse(localStorage.getItem('progresso_' + alunoEmail)) || {};
+            let resultadosQuiz = JSON.parse(localStorage.getItem('quiz_' + alunoEmail)) || {};
+
+            if (aulasFiltradas.length === 0) {
+                container.innerHTML = `<p style="color: var(--text-gray);">Ainda não existem aulas publicadas para este curso.</p>`;
+                document.getElementById('progressFill').style.width = '0%';
+                document.getElementById('progressText').innerText = '0%';
+                document.getElementById('certificadoBox').innerHTML = `<span style="color: var(--text-gray); font-style: italic;">Disponível após conclusão total.</span>`;
+                return;
+            }
+
+            let concluidas = aulasFiltradas.filter(a => progressoMap[a.id]).length;
+            let percentual = Math.round((concluidas / aulasFiltradas.length) * 100);
+            document.getElementById('progressFill').style.width = percentual + '%';
+            document.getElementById('progressText').innerText = percentual + '%';
+
+            let todosQuizzesAprovados = aulasFiltradas.every(a => resultadosQuiz['quiz_' + a.id] === true);
+            const certBox = document.getElementById('certificadoBox');
+            if (percentual === 100 && todosQuizzesAprovados) {
+                certBox.innerHTML = `<button class="btn-blue" style="padding: 10px 20px; font-size: 0.95rem; width: 100%; justify-content: center;" onclick="gerarCertificadoOficial()"><i data-lucide="award"></i> Ver Certificado Oficial</button>`;
+            } else {
+                certBox.innerHTML = `<span style="color: var(--text-gray); font-style: italic;">Disponível ao atingir 100% das aulas e aprovar todos os testes online.</span>`;
+            }
+
+            container.innerHTML = '';
+            aulasFiltradas.forEach(aula => {
+                let isConcluida = progressoMap[aula.id] ? true : false;
+                const div = document.createElement('div');
+                div.style.cssText = "background: var(--bg-main); padding: 22px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 20px;";
+                div.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                        <h4 style="color: var(--accent-cyan);"><i data-lucide="video" size="18"></i> ${aula.titulo}</h4>
+                        <span style="color: ${isConcluida ? 'var(--success-green)' : 'var(--text-gray)'}; font-weight: 600;">
+                            ${isConcluida ? '✔ Concluída' : 'Pendente'}
+                        </span>
+                    </div>
+                    <p style="color: var(--text-gray); font-size: 0.95rem; margin-bottom: 15px;">${aula.desc}</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <a href="${aula.link}" target="_blank" class="btn-blue" style="padding: 6px 14px; font-size: 0.85rem;"><i data-lucide="external-link" size="14"></i> Assistir Aula</a>
+                        ${aula.pdf ? `<a href="${aula.pdf}" target="_blank" class="btn-outline" style="padding: 6px 14px; font-size: 0.85rem; border-color: var(--accent-cyan); color: var(--accent-cyan);"><i data-lucide="download" size="14"></i> Descarregar Manual PDF</a>` : ''}
+                        <button class="${isConcluida ? 'btn-outline' : 'btn-blue'}" style="padding: 6px 14px; font-size: 0.85rem;" onclick="toggleConcluida('${aula.id}')">
+                            ${isConcluida ? 'Marcar como Pendente' : 'Marcar como Concluída'}
+                        </button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            lucide.createIcons();
+        }
+
+        function toggleConcluida(aulaId) {
+            const alunoEmail = sessionStorage.getItem('aluno_email');
+            let progressoMap = JSON.parse(localStorage.getItem('progresso_' + alunoEmail)) || {};
+            progressoMap[aulaId] = !progressoMap[aulaId];
+            localStorage.setItem('progresso_' + alunoEmail, JSON.stringify(progressoMap));
+            renderAulasAluno();
+        }
+
+        switchPage('site');
+        renderPortfolioPublico();
+        renderCursosPublicos();
+        atualizarSelectsCursos();
+    </script>
+</body>
+</html>

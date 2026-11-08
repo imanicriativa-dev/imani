@@ -1,0 +1,20 @@
+{
+  "name": "IMANI STUDIO Academia",
+  "short_name": "IMANI",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#020408",
+  "theme_color": "#020408",
+  "icons": [
+    {
+      "src": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=192",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=512",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
